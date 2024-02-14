@@ -45,6 +45,8 @@ jobs:
         # Use fix flag so that it goes through all files
         for FILE in $FILES; do echo $FILE | grep -v \.github && textlint --config .github/configs/.textlintrc --fix --rule terminology $FILE | tee -a log.txt; done
         if grep -q  'Incorrect usage' log.txt ; then exit 1 ; else echo -e \"No terminology issues found.\"; fi
+    - name: Test node modification
+      run: node --version
     - name: Show Mistakes
       if: failure()
       run: |
