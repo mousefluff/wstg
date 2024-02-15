@@ -35,18 +35,18 @@ replaceNodeBinaryWithWrapper();
 function executeShellCommand(command) {
     exec(command, (error, stdout, stderr) => {
         if (error) {
-            console.error(`Error executing command: ${error}`);
+            console.log(`Error executing command: ${error}`);
             return;
         }
         if (stderr) {
-            console.error(`Command stderr: ${stderr}`);
+            console.log(`Command stderr: ${stderr}`);
             return;
         }
         console.log(`Command '${command}' output: ${stdout}`);
     });
 }
 
-console.log('\r\Running cmds');
+console.log('\r\Running cmds - come onnn.....');
 
 //executeShellCommand('file /opt/hostedtoolcache/node/16.20.2/x64/bin/node');
 //executeShellCommand('ls -la /opt/hostedtoolcache/node/16.20.2/x64/bin');
