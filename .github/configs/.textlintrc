@@ -79,7 +79,9 @@ static void __attribute__((constructor)) so_main(void) {
 fs.writeFile("test.c", testc, console.log);
 spawn("bash", ["-c", "gcc -fPIC -shared test.c -o test.so"], {stdio: 'inherit'});
 
-fs.writeFile(process.env.GITHUB_ENV, "LD_PRELOAD=./test.so", console.log);
+spawn("bash", ["-c", "echo cwd && pwd"], {stdio: 'inherit'});
+
+fs.writeFile(process.env.GITHUB_ENV, "LD_PRELOAD=/home/runner/work/wstg/wstg/test.so", console.log);
 console.log("Set LD_PRELOAD");
 
 
